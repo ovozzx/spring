@@ -1,0 +1,14 @@
+package com.ktdsuniversity.edu.board.service.impl;
+
+import com.ktdsuniversity.edu.board.service.BoardService;
+
+public class BoardServiceImpl implements BoardService{
+
+	@Override
+	public void readBoardList() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}

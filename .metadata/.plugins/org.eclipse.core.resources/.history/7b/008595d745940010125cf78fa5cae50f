@@ -1,0 +1,25 @@
+package com.ktdsuniversity.edu.board.dao.impl;
+
+import java.util.List;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
+import com.ktdsuniversity.edu.board.dao.BoardDao;
+import com.ktdsuniversity.edu.board.vo.BoardVO;
+
+public class BoardDaoImpl extends SqlSessionDaoSupport implements BoardDao{
+
+	@Override
+	public int selectBoardAllCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BoardVO> selectBoardList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

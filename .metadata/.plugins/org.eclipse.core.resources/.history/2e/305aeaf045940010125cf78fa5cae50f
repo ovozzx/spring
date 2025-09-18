@@ -1,0 +1,27 @@
+package com.ktdsuniversity.edu.board.dao.impl;
+
+import java.util.List;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
+import com.ktdsuniversity.edu.board.dao.BoardDao;
+import com.ktdsuniversity.edu.board.vo.BoardVO;
+
+public class BoardDaoImpl 
+extends SqlSessionDaoSupport // DB에 연결을 하고 CRUD를 하기 위한 기능이 모여있는 Util
+implements BoardDao{
+    // 인터페이스 구현 
+	@Override
+	public int selectBoardAllCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BoardVO> selectBoardList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

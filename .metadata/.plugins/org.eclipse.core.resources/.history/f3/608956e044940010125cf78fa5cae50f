@@ -1,0 +1,8 @@
+package com.ktdsuniversity.edu.board.dao;
+/**
+ * Database에서 Insert, Select, Update, Delete를 수행 요청하는 인터페이스 
+ * 			   Create, Read, Update, Delete (위 내용 의미)
+ */
+public interface BoardDao {
+
+}

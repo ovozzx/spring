@@ -1,6 +1,7 @@
 package com.ktdsuniversity.edu.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 // Controller 역할 부여
@@ -13,7 +14,9 @@ public class TestController {
 	// 항상 end point 생성 url로 접근할 수 있도록 get 방식
 	@GetMapping("/hello")
 	// "/hello"에 대응하는 메소드
-	public String viewHelloPage() {// 화면을 보여주고 싶으면 반환타입 String
+	public String viewHelloPage(Model model) {// 화면을 보여주고 싶으면 반환타입 String
+		model.addAttribute("myname","이소영"); // key value 형식
+//		return "ads";
 		return "testview"; // 파일 이름만 적음 => 내부적으로 "/WEB-INF/views/testview.jsp" 경로 만들어짐 
 		// template engine 반환 (spring.mvc.view.prefix + 파일명 + spring.mvc.view.suffix)
 		// /WEB-INF/views/ + testview + .jsp

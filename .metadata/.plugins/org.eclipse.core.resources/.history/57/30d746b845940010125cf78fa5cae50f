@@ -1,0 +1,7 @@
+package com.ktdsuniversity.edu.board.dao.impl;
+
+import com.ktdsuniversity.edu.board.dao.BoardDao;
+
+public class BoardDaoImpl implements BoardDao{
+
+}

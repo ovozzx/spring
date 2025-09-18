@@ -11,6 +11,7 @@
 <body>
 	<h1>JSP Template Engine</h1>
 	<div>Spring Bood Controller에서 반환한 내용입니다.</div>
+	<div>안녕하세요. 제 이름은 ${myname} 입니다.</div>
 	<ul>
 		<li>1</li>
 		<li>2</li>

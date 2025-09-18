@@ -1,0 +1,14 @@
+package com.ktdsuniversity.edu.board.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.ktdsuniversity.edu.board.service.BoardService;
+
+@Controller // end point 만들어줌. 
+public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
+
+}

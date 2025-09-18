@@ -1,0 +1,36 @@
+package com.ktdsuniversity.edu.board.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ktdsuniversity.edu.board.dao.BoardDao;
+import com.ktdsuniversity.edu.board.service.BoardService;
+import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+
+@Service
+public class BoardServiceImpl implements BoardService{ // bean 컨테이너 바깥에 만듦 => 넣어주는 애노테이션 존재 "@Service"
+    // BoardDaoImpl을 의존하겠다 
+	// 멤버변수로 의존
+	@Autowired
+	private BoardDao boradDao;
+	@Override
+	public ResponseBoardListVO readBoardList() {
+		
+		// 게시글의 개수 필요
+		int count = this.boradDao.selectBoardAllCount();
+		
+		// 게시글의 목록 필요
+		List<BoardVO> list = this.boradDao.selectBoardList();
+		
+		// 게시글의 개수 + 게시글의 목록 반환
+		ResponseBoardListVO result = new ResponseBoardListVO();
+		
+		return null;
+		
+	}
+	
+
+}

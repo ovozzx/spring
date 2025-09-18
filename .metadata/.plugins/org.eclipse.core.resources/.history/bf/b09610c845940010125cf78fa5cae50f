@@ -1,0 +1,23 @@
+package com.ktdsuniversity.edu.board.dao.impl;
+
+import java.util.List;
+
+import com.ktdsuniversity.edu.board.dao.BoardDao;
+import com.ktdsuniversity.edu.board.vo.BoardVO;
+
+public class BoardDaoImpl implements BoardDao{
+
+	@Override
+	public int selectBoardAllCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BoardVO> selectBoardList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

@@ -1,0 +1,11 @@
+package com.ktdsuniversity.edu.board.service;
+
+import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+
+// Service (송금)
+// repository (입금, 출금)
+public interface BoardService {
+	
+	public ResponseBoardListVO readBoardList();
+
+}

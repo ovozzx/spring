@@ -1,0 +1,18 @@
+# mybatis와 spring 연동을 위한 설정
+spring:
+  # template engine (JSP)의 위치를 설정
+  # 설정 경로 : src/main/webapp 아래부터 작성
+  mvc: # 템플릿 엔진이 어디에 있는지 설정 (당분간 안 건드려도 됨)
+    view:
+      prefix: /WEB-INF/views/ # 경로를 넣음 src/main/webapp/WEB-INF/views/
+      suffix: .jsp # 확장자를 넣음
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: SPRING_BOOT
+    password: 1234
+  application:
+    name: hello-springg
+
+
+

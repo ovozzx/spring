@@ -1,0 +1,7 @@
+package com.ktdsuniversity.edu.board.dao;
+/**
+ * Database에서 Select 
+ */
+public interface BoardDao {
+
+}
