@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.board.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
 
 /**
  * Database에서 Insert, Select, Update, Delete를 수행 요청하는 인터페이스 
@@ -12,6 +13,9 @@ public interface BoardDao {
 	// 인터페이스 함수 이름 위 쿼리 중 4개 기능 명확하게 명시 (반드시)
 	public int selectBoardAllCount();
 	public List<BoardVO> selectBoardList();
+	public int insertNewBoard(RequestCreateBoardVO requestCreateBoardVO);
+	public BoardVO selectBoardById(String id);
+	public int updateViewCntById(String id);
 	
 	
 

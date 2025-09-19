@@ -10,6 +10,7 @@ public class BoardVO {
 	private String crtDt;
 	private String mdfyDt;
 	private String delYn;
+	
 	public String getId() {
 		return id;
 	}

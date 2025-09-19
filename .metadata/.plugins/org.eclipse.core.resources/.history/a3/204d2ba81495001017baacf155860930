@@ -1,0 +1,11 @@
+package com.ktdsuniversity.edu.board.vo;
+
+public class RequestCreateBoardVO {
+	//payload를 멤버변수로 적어줌 (이름 같아야 함_
+	private String subject;
+	private String email;
+	private String content;
+	
+	
+
+}

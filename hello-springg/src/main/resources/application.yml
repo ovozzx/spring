@@ -1,6 +1,6 @@
-logging:
-  level:
-    root: debug
+#logging:
+#  level:
+#    root: debug
 
 # mybatis와 spring 연동을 위한 설정 config.xml 파일 위치를 알려줌
 mybatis:

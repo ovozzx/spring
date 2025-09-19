@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.board.dao.BoardDao;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
 
 @Repository // DB에 접속할 수 있는 에노테이션 : 너는 이제 DB 접속할 역할! 부여 
 public class BoardDaoImpl 
@@ -19,20 +20,35 @@ implements BoardDao{ // MyBatis : DB에 쉽게 접근할 수 있도록 만들어
 	@Autowired //import 하기. 최초에 1번 어떤 설정 필요
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		// TODO Auto-generated method stub
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
-    // 인터페이스 구현 
+    // 인터페이스 구현 (ex) 입금, 출금에 해당하는 내용
 	@Override
 	public int selectBoardAllCount() {
-		// TODO Auto-generated method stub
-		return super.getSqlSession().selectOne(this.NAME_SPACE + "selectBoardAllCount"); // 파라미터에 mapper에서 id 적으면 됨
+		return super.getSqlSession().selectOne(this.NAME_SPACE + "selectBoardAllCount"); 
+		// 파라미터에 mapper에서 id 적으면 됨
 	}
 
 	@Override
 	public List<BoardVO> selectBoardList() {
-		// TODO Auto-generated method stub
 		return super.getSqlSession().selectList(this.NAME_SPACE + "selectBoardList");
+	}
+	
+	@Override
+	public int insertNewBoard(RequestCreateBoardVO requestCreateBoardVO) {
+		return super.getSqlSession().insert(this.NAME_SPACE + "insertNewBoard", requestCreateBoardVO); // 사용자가 입력한 정보 또한 insert 해야해서 파라미터에 추가, requestCreateBoardVO 파라미터 1개만 보낼 수 있음
+		
+	}
+	@Override
+	public BoardVO selectBoardById(String id) {
+		// TODO Auto-generated method stub
+		return super.getSqlSession().selectOne(this.NAME_SPACE + "selectBoardById", id); 
+	}
+
+	@Override
+	public int updateViewCntById(String id) {
+		// TODO Auto-generated method stub
+		return super.getSqlSession().update(this.NAME_SPACE + "updateViewCntById", id);
 	}
 
 	

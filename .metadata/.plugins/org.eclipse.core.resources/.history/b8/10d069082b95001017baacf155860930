@@ -1,0 +1,83 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+body {
+    margin: 0;
+    color: #333;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+div.wrapper {
+    width: 80vw;
+    margin: 0 auto;
+    
+    & > .page-title {
+       font-size: 1.5rem;
+       margin: 20px 0;
+    }
+}
+
+div.board-write {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: 28px 28px 320px 1fr;
+    
+    & > textarea {
+        height: 300px;
+    }
+}
+
+div.grid {
+    display: grid;
+    row-gap: 10px;
+    
+    & > label.require{
+       vertical-align: middle;
+       
+       &:before {
+           content: "*";
+           color: #F00;
+           margin-right: 5px;
+           vertical-align: middle;
+        }
+    }
+    
+    & > button, input, textarea {
+       padding: 10px;
+       outline: 0;
+    }
+    
+    & > div.btn-group {
+       grid-column: 1 / -1;
+       
+       & > div.right-align {
+           text-align: right;
+       }
+       
+       & button {
+           padding: 5px 10px;
+           color: #333;
+           border: 0;
+           border-radius: 5px;
+           background-color: transparent;
+       }
+       
+       & button.save-btn {
+           color: #4949ff;
+           
+           &:hover {
+               color: #FFF;
+               background-color: #4949ff;
+           }
+       }
+       
+       & button.cancel-btn {
+           color: #ff4949;
+           
+           &:hover {
+               color: #FFF;
+               background-color: #ff4949;
+           }
+       }
+    }
+    
+}

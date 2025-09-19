@@ -1,0 +1,58 @@
+package com.ktdsuniversity.edu.board.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ktdsuniversity.edu.board.service.BoardService;
+import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+
+@Controller // end point 만들어줌. 
+public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@GetMapping("/list") // 브라우저에거 곧바로 접속할 수 있도록
+	public String viewBoardListPage(Model model) {
+		
+		ResponseBoardListVO result = this.boardService.readBoardList();
+		model.addAttribute("list", result);
+		// /WEB-INF/views/board/list.jsp
+		return "board/list"; // view. 
+	}
+	
+	@GetMapping("/write")
+	public String viewBoardWritePage() {
+		return "board/write"; // view. 
+	} 
+// 브라우저가 보내준 Form Data(Payload)를 가져오는 3가지 방법 : 2, 3번 마니씀
+//1. 브라우저의 요청 정보를 이용해 가져오기 (HttpServletRequest 이용) -> 사용자의 ip를 알고 싶을 때
+//	@PostMapping("/write") // 방식 다르면 주소 똑같을 수 있음
+//	public String doWriteBoardAction(HttpServletRequest request){
+//		String subject = request.getParameter("subject");
+//		String email = request.getParameter("email");
+//		String content = request.getParameter("content");
+//		String userIp = request.getRemoteAddr();
+//		// sts 콘솔에 출력 
+//		System.out.println("Subject" + subject);
+//		System.out.println("Email" + email);
+//		System.out.println("Content" + content); 
+//		System.out.println(userIp); // ipv6 형식 (localhost로 가져올 때)
+//		return ""; // view. 
+//	}
+// 2. Payload의 값들만 하나씩 가져오기 (@RequestParam 이용) : get, post 같은 방법으로 가져옴 but ip는 못 가져옴!
+	@PostMapping("/write")
+	public String doWriteBoardAction(@RequestParam String subject, 
+									 @RequestParam String email, 
+									 @RequestParam String content) {
+		System.out.println("Subject" + subject);
+		System.out.println("Email" + email);
+		System.out.println("Content" + content); 
+		return "";
+	}
+// 3. Payload의 값을 통채로 가져오기 (Command Object 이용)
+}

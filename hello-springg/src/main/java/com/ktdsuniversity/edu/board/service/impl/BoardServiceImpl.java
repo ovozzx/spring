@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ktdsuniversity.edu.board.dao.BoardDao;
 import com.ktdsuniversity.edu.board.service.BoardService;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
 import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
 
 @Service // 트랜잭션만 처리해서 간단하게 작성
@@ -15,16 +16,16 @@ public class BoardServiceImpl implements BoardService{ // bean 컨테이너 바�
     // BoardDaoImpl을 의존하겠다 
 	// 멤버변수로 의존
 	@Autowired
-	private BoardDao boradDao;
+	private BoardDao boardDao;
 	
 	@Override
 	public ResponseBoardListVO readBoardList() {
 		
 		// 게시글의 개수 필요
-		int count = this.boradDao.selectBoardAllCount();
+		int count = this.boardDao.selectBoardAllCount();
 		
 		// 게시글의 목록 필요
-		List<BoardVO> list = this.boradDao.selectBoardList();
+		List<BoardVO> list = this.boardDao.selectBoardList();
 		
 		// 게시글의 개수 + 게시글의 목록 반환
 		ResponseBoardListVO result = new ResponseBoardListVO();
@@ -35,5 +36,31 @@ public class BoardServiceImpl implements BoardService{ // bean 컨테이너 바�
 		
 	}
 	
+	@Override
+	public boolean createNewBoard(RequestCreateBoardVO requestCreateBoardVO) {
+		// boardDao를 통해서 "insert"를 수행
+		// 그 결과를 반환시킨다
+		return this.boardDao.insertNewBoard(requestCreateBoardVO) > 0 ; // insert, update 반환 결과 int -> 0 보다 크면 성공
+	}
+
+	@Override
+	public BoardVO readBoardOneById(String id) {
+		// 1. 게시글의 조회 수를 1 증가시킨다.
+		/**
+		 * UPDATE BOARD
+		 * 	SET VIEW_CNT = VIEW_CNT + 1
+		 * WHERE ID = ? 
+		 */
+		int updateCount = this.boardDao.updateViewCntById(id);
+		if (updateCount == 0) { // 예외처리
+			throw new IllegalArgumentException(id + "게시글은 존재하지 않습니다.");
+		}
+		
+		// 2. 게시글의 내용을 조회한다.
+		BoardVO board = this.boardDao.selectBoardById(id);
+		
+		// 3. 게시글의 내용을 반환시킨다.
+		return board;
+	}
 
 }
