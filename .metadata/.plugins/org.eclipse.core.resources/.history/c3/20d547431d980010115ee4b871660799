@@ -1,0 +1,6 @@
+package com.ktdsuniversity.edu.board.vo;
+
+public class RequestModifyBoardVO {
+//3개의 페이로드 전달 (subject, email, content, id (path variable)) RequestModifyBoardVO에 4개 필요
+	
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<section name="java.lang.Class">
 		<item key="selection" value="BoardDaoImpl"/>
 		<item key="wrap" value="true"/>
@@ -7,7 +8,13 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
+		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="repeat"/>
+			<item value="viewCnt"/>
+			<item value="Autowir"/>
+			<item value="Autowired"/>
+			<item value="Auto"/>
 			<item value="BoardDaoImpl"/>
 			<item value="sqlSessionFactory"/>
 		</list>

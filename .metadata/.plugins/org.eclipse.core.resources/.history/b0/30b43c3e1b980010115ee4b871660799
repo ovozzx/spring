@@ -1,0 +1,101 @@
+package com.ktdsuniversity.edu.board.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.ktdsuniversity.edu.board.service.BoardService;
+import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
+import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+
+@Controller // end point 만들어줌. 
+public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@GetMapping("/list") // 브라우저에거 곧바로 접속할 수 있도록
+	public String viewBoardListPage(Model model) {
+		
+		ResponseBoardListVO result = this.boardService.readBoardList();
+		model.addAttribute("list", result);
+		// /WEB-INF/views/board/list.jsp
+		return "board/list"; // view. 
+	}
+	
+	@GetMapping("/write")
+	public String viewBoardWritePage() {
+		return "board/write"; // view. 
+	} 
+// 브라우저가 보내준 Form Data(Payload)를 가져오는 3가지 방법 : 2, 3번 마니씀
+//1. 브라우저의 요청 정보를 이용해 가져오기 (HttpServletRequest 이용) -> 사용자의 ip를 알고 싶을 때
+//	@PostMapping("/write") // 방식 다르면 주소 똑같을 수 있음
+//	public String doWriteBoardAction(HttpServletRequest request){
+//		String subject = request.getParameter("subject");
+//		String email = request.getParameter("email");
+//		String content = request.getParameter("content");
+//		String userIp = request.getRemoteAddr();
+//		// sts 콘솔에 출력 
+//		System.out.println("Subject" + subject);
+//		System.out.println("Email" + email);
+//		System.out.println("Content" + content); 
+//		System.out.println(userIp); // ipv6 형식 (localhost로 가져올 때)
+//		return ""; // view. 
+//	}
+// 2. Payload의 값들만 하나씩 가져오기 (@RequestParam 이용) : get, post 같은 방법으로 가져옴 but ip는 못 가져옴!
+//	@PostMapping("/write")
+//	public String doWriteBoardAction(@RequestParam String subject, 
+//									 @RequestParam String email, 
+//									 @RequestParam String content,
+//									 HttpServletRequest request) { // ip 가져오고 싶으면 이거추가
+//		System.out.println("Subject" + subject);
+//		System.out.println("Email" + email);
+//		System.out.println("Content" + content); 
+//		System.out.println(request.getRemoteAddr());
+//		return "";
+//	}
+// 3. Payload의 값을 통채로 가져오기 (Command Object 이용) : 젤 많이씀. VO 필요 만들어야됨
+	@PostMapping("/write")
+	public String doWriteBoardAction(RequestCreateBoardVO requestCreateBoardVO){
+//		System.out.println(requestCreateBoardVO);
+		// 게시글 등록 트랜잭션 요청.
+		boolean createResult = this.boardService.createNewBoard(requestCreateBoardVO); // insert -> create
+		// 게시글 등록이 성공했다면, 게시글의 상세 페이지로 이동한다.
+		
+		// 이동을 처리하는 view => RedirectView
+		return "redirect:/view/" + requestCreateBoardVO.getId();
+		// 아이디 값을 모름 -> 여기서 발급해서 넣어주자!
+	}
+	@GetMapping("/view/{id}") // end point 생성. {id} -> path variable
+	public String viewBoardDetailPage(@PathVariable String id, Model model) { // 컨트롤러에 필요한 거 있으면 파라미터에 추가하면 됨
+//		System.out.println(id);
+		// 1. 게시글을 조회해온다 from boardService.
+		BoardVO board = this.boardService.readBoardOneById(id);
+		
+		// 2. View로 보내준다. (게시글의 내용) view한테 데이터를 보내줘야함 -> model
+		model.addAttribute("board", board); // board 인스턴스
+		
+		return "board/view";
+	}
+	
+	/**
+	 * GET 방식으로 /modify/{id}로 접근할 경우
+	 * id에 해당되는 게시글의 정보를 모두 읽어서 게시글 수정 페이지에 노출시킨다.
+	 * 게시글 수정 페이지 : "board/modify"
+	 * 
+	 * 게시글의 정보를 읽는다 ==> boardService.readBoardOneById(id) : 사용
+	 */
+	@GetMapping("/modify/{id}")
+	public String vuewBoardModiifyPage(@PathVariable String id, Model model) {
+		// url id 값을 가져오기 위해서 path variable 필요
+		BoardVO board = this.boardService.readBoardOneById(id);
+		model.addAttribute("board", board);
+		
+		return "board/modify";
+	}
+	
+}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.ktdsuniversity.edu.board.service.BoardService;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO;
 import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
 
 @Controller // end point 만들어줌. 
@@ -74,7 +75,7 @@ public class BoardController {
 	public String viewBoardDetailPage(@PathVariable String id, Model model) { // 컨트롤러에 필요한 거 있으면 파라미터에 추가하면 됨
 //		System.out.println(id);
 		// 1. 게시글을 조회해온다 from boardService.
-		BoardVO board = this.boardService.readBoardOneById(id);
+		BoardVO board = this.boardService.readBoardOneById(id, true);
 		
 		// 2. View로 보내준다. (게시글의 내용) view한테 데이터를 보내줘야함 -> model
 		model.addAttribute("board", board); // board 인스턴스
@@ -82,4 +83,45 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	/**
+	 * GET 방식으로 /modify/{id}로 접근할 경우
+	 * id에 해당되는 게시글의 정보를 모두 읽어서 게시글 수정 페이지에 노출시킨다.
+	 * 게시글 수정 페이지 : "board/modify"
+	 * 
+	 * 게시글의 정보를 읽는다 ==> boardService.readBoardOneById(id) : 사용
+	 */
+	@GetMapping("/modify/{id}")
+	public String vuewBoardModiifyPage(@PathVariable String id, Model model) {
+		// url id 값을 가져오기 위해서 path variable 필요
+		BoardVO board = this.boardService.readBoardOneById(id, false);
+		model.addAttribute("board", board);
+		
+		return "board/modify";
+	}
+	
+	/**
+	 * POST 방식으로 /modify/{id}로 요청을 받으면
+	 * 게시글 수정 정보 (RequestModifyBoardVO)를 파라미터로 받아와
+	 * update query를 돌작시킨다.
+	 * 
+	 * controller = doBoardModifyAction
+	 * 
+	 * service - updateBoradModifyById(RequestModifyBoardVO)
+	 * dao - updateBoardModifyById(RequestModifyBoardVO)
+	 * 3개의 페이로드 전달 (subject, email, content, id (path variable)) RequestModifyBoardVO에 4개 필요
+	 */
+	
+	@PostMapping("/modify/{id}")
+	public String doBoardModifyAction(@PathVariable String id, RequestModifyBoardVO requestModifyBoardVO){ //커맨드 객체 
+		// http 서블릿, param , 커맨드 
+		
+		requestModifyBoardVO.setId(id);
+		
+		// insert / update / delete는 항상 boolean
+		boolean upadateResult= this.boardService.updateBoardModifyById(requestModifyBoardVO);
+		// ??
+		
+		//수정이 완료되면 "/list" URL로 이동시킨다
+		return "board/list";
+	}
 }

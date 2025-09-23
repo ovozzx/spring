@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ktdsuniversity.edu.board.dao.BoardDao;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO;
 
 @Repository // DB에 접속할 수 있는 에노테이션 : 너는 이제 DB 접속할 역할! 부여 
 public class BoardDaoImpl 
@@ -51,5 +52,9 @@ implements BoardDao{ // MyBatis : DB에 쉽게 접근할 수 있도록 만들어
 		return super.getSqlSession().update(this.NAME_SPACE + "updateViewCntById", id);
 	}
 
+	@Override
+	public int updateBoardModifyById(RequestModifyBoardVO requestModifyBoardVO) {
+		return super.getSqlSession().update(this.NAME_SPACE + "updateBoardModifyById", requestModifyBoardVO);
+	}
 	
 }
