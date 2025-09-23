@@ -13,5 +13,5 @@ public interface BoardService {
 	public boolean createNewBoard(RequestCreateBoardVO requestCreateBoardVO);
 	public BoardVO readBoardOneById(String id, boolean doIncreaseViewCount);
 	public boolean updateBoardModifyById(RequestModifyBoardVO requestModifyBoardVO);
-
+    public boolean deleteBoardById(String id);
 }

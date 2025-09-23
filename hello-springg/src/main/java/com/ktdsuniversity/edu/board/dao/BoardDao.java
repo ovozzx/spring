@@ -18,7 +18,7 @@ public interface BoardDao {
 	public BoardVO selectBoardById(String id);
 	public int updateViewCntById(String id);
 	public int updateBoardModifyById(RequestModifyBoardVO requestModifyBoardVO);
-	
+	public int deleteBoardById(String id);
 	
 
 }

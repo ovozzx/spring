@@ -81,4 +81,13 @@ public class BoardServiceImpl implements BoardService{ // bean 컨테이너 바�
 		return updateCount > 0;
 	
 	}
+
+	@Override
+	public boolean deleteBoardById(String id) {
+		int deleteCount = this.boardDao.deleteBoardById(id); // dao에서 update, insert, delete 결과는 항상 int
+		if(deleteCount == 0) {
+			throw new IllegalArgumentException(id + "게시글은 존재하지 않습니다.");
+		}
+		return deleteCount > 0;
+	}
 }

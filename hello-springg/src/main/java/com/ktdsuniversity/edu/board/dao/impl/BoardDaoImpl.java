@@ -56,5 +56,10 @@ implements BoardDao{ // MyBatis : DB에 쉽게 접근할 수 있도록 만들어
 	public int updateBoardModifyById(RequestModifyBoardVO requestModifyBoardVO) {
 		return super.getSqlSession().update(this.NAME_SPACE + "updateBoardModifyById", requestModifyBoardVO);
 	}
+	@Override
+	public int deleteBoardById(String id) {
+		// TODO Auto-generated method stub
+		return super.getSqlSession().update(this.NAME_SPACE + "deleteBoardById", id); // 논리적 삭제
+	}
 	
 }

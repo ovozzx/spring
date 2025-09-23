@@ -124,4 +124,12 @@ public class BoardController {
 		//수정이 완료되면 "/list" URL로 이동시킨다
 		return "board/list";
 	}
+	
+	@GetMapping("/delete/{id}")
+	public String doDeleteBoardAction(@PathVariable String id) {
+		
+		boolean deleteResult = this.boardService.deleteBoardById(id);
+		
+		return "redirect:/list"; // 삭제한 이후의 리스트로 이동
+	}
 }
