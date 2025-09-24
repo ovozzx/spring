@@ -1,0 +1,83 @@
+package com.ktdsuniversity.edu.board.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ktdsuniversity.edu.board.dao.BoardDao;
+import com.ktdsuniversity.edu.board.service.BoardService;
+import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
+import com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO;
+import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+
+@Service
+public class BoardServiceImpl implements BoardService{
+
+	@Autowired // 이걸 쓰려면 다른 에노테이션 
+    private BoardDao boardDao;	
+	
+	@Override
+	public ResponseBoardListVO readBoardList() {
+		
+		ResponseBoardListVO result = new ResponseBoardListVO();
+		
+		int count = this.boardDao.selectBoardAllCount();
+		List<BoardVO> list = this.boardDao.selectBoardList();
+		
+		result.setCount(count);
+		result.setList(list);
+		
+		return result;
+	}
+
+	@Override
+	public boolean createNewBoard(RequestCreateBoardVO requestCreateBoardVO) {
+		return this.boardDao.insertNewBoard(requestCreateBoardVO) > 0;
+	}
+
+	@Override
+	public BoardVO readBoardOneById(String id, boolean doIncreaseViewCount) {
+		
+//		BoardVO result = new BoardVO();
+		// 조회수 증가 -> 조회 순서가 맞음
+		if (doIncreaseViewCount) {
+			int updateCount = this.boardDao.updateViewCntById(id);
+			if (updateCount == 0) {
+				throw new IllegalArgumentException(id + " 게시글은 존재하지 않습니다.");
+			}
+		}
+		
+		// 2. 게시글의 내용을 조회한다.
+		BoardVO board = this.boardDao.selectBoardById(id);
+		if (board == null) {
+			throw new IllegalArgumentException(id + " 게시글은 존재하지 않습니다.");
+		}
+		
+		// 3. 게시글의 내용을 반환시킨다.
+		return board;
+	}
+
+	@Override
+	public boolean updateBoardModifyById(RequestModifyBoardVO requestModifyBoardVO) {
+		int updateCount = this.boardDao.updateBoardModifyById(requestModifyBoardVO);
+		
+		if (updateCount == 0) {
+			throw new IllegalArgumentException(requestModifyBoardVO.getId() + " 게시글은 존재하지 않습니다.");
+		}
+		
+		return updateCount > 0;
+	}
+
+	@Override
+	public boolean deleteBoardById(String id) {
+		int deleteCount = this.boardDao.deleteBoardById(id);
+		if (deleteCount == 0) {
+			throw new IllegalArgumentException(id + " 게시글은 존재하지 않습니다.");
+		}
+		
+		return deleteCount > 0;
+	}
+
+}

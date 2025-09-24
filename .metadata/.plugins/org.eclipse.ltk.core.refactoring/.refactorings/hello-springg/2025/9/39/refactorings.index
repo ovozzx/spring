@@ -3,3 +3,18 @@
 1758591230513	Encapsulate field 'email, ...'
 1758591234001	Encapsulate field 'content, ...'
 1758591347670	Encapsulate field 'id, ...'
+1758601666769	Delete elements
+1758601678133	Delete element
+1758601697082	Delete element
+1758601717776	Delete element
+1758602481366	Delete element
+1758602673150	Rename type 'BoardService'
+1758602729611	Rename package 'com.ktdsuniversity.edu.board.service.impl'
+1758602740058	Move compilation unit
+1758603584852	Rename package 'com.ktdsuniversity.edu.board.dao.impl'
+1758603623869	Delete element
+1758688890850	Delete element
+1758688996786	Move file
+1758694895221	Delete elements
+1758694917879	Delete element
+1758695120585	Delete element

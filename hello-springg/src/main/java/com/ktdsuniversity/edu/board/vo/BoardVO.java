@@ -2,69 +2,75 @@ package com.ktdsuniversity.edu.board.vo;
 
 public class BoardVO {
 
-	private String id;
-	private String subject;
-	private String content;
-	private String email;
-	private int viewCnt; // 변수명에 단어 대문자로 구분 camel (대소문자 구분)
-	private String crtDt;
-	private String mdfyDt;
-	private String delYn;
-	
+	private	int number;
+	private	String id;
+	private	String subject;
+	private	String content;
+	private	String email;
+	private	int viewCnt;
+	private	String crtDt;
+	private	String mdfyDt;
+	private	String delYn;
+
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
 	public String getId() {
 		return id;
 	}
-	
 	public void setId(String id) {
 		this.id = id;
 	}
 	public String getSubject() {
-		return this.subject;
+		return subject;
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 	public String getContent() {
-		return this.content;
+		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getView_cnt() {
-		return this.viewCnt;
+	public int getViewCnt() {
+		return viewCnt;
 	}
-	public void setView_cnt(int view_cnt) {
-		this.viewCnt = view_cnt;
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
 	}
-	public String getCrt_dt() {
-		return this.crtDt;
+	public String getCrtDt() {
+		return crtDt;
 	}
-	public void setCrt_dt(String crt_dt) {
-		this.crtDt = crt_dt;
+	public void setCrtDt(String crtDt) {
+		this.crtDt = crtDt;
 	}
-	public String getMdfy_dt() {
-		return this.mdfyDt;
+	public String getMdfyDt() {
+		return mdfyDt;
 	}
-	public void setMdfy_dt(String mdfy_dt) {
-		this.mdfyDt = mdfy_dt;
+	public void setMdfyDt(String mdfyDt) {
+		this.mdfyDt = mdfyDt;
 	}
-	public String getDel_yn() {
-		return this.delYn;
+	public String getDelYn() {
+		return delYn;
 	}
-	public void setDel_yn(String del_yn) {
-		this.delYn = del_yn;
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
 	}
 	
 	@Override
 	public String toString() {
-		return "BoardVO [id=" + this.id + ", subject=" + this.subject + ", content=" + this.content + ", email=" + this.email
-				+ ", view_cnt=" + this.viewCnt + ", crt_dt=" + this.crtDt + ", mdfy_dt=" + this.mdfyDt + ", del_yn=" + this.delYn + "]";
+		return "BoardVO [id=" + this.id + ", subject=" + this.subject + ", content=" + this.content + ", email=" + this.email + ", viewCnt="
+				+ this.viewCnt + ", crtDt=" + this.crtDt + ", mdfyDt=" + this.mdfyDt + ", delYn=" + this.delYn + "]";
 	}
 	
 

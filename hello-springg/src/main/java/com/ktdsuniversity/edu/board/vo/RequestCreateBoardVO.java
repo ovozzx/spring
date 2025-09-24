@@ -1,14 +1,23 @@
 package com.ktdsuniversity.edu.board.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RequestCreateBoardVO {
-	//payload를 멤버변수로 적어줌 (이름 같아야 함)
+
+	private MultipartFile file;
 	private String id;
 	private String subject;
 	private String email;
 	private String content;
 	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	public String getId() {
-		return this.id;
+		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -32,13 +41,12 @@ public class RequestCreateBoardVO {
 		this.content = content;
 	}
 	
-
 	@Override
 	public String toString() {
-		return "RequestCreateBoardVO [subject=" + this.subject + ", email=" + this.email + ", content=" + this.content + "]";
+		return "RequestCreateBoardVO [id=" + id + ", subject=" + subject + ", email=" + email + ", content=" + content
+				+ "]";
 	}
 	
-	
-	
 
+	
 }

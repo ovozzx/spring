@@ -9,39 +9,41 @@
     </select>
     <select id="selectBoardList"
             resultType="com.ktdsuniversity.edu.board.vo.BoardVO">
-      SELECT ID
+      SELECT ROW_NUMBER() OVER(ORDER BY ID) "NUMBER"
+           , ID
 		   , SUBJECT
 		   , CONTENT
 		   , EMAIL
 		   , VIEW_CNT
-		   , CRT_DT
-		   , MDFY_DT
+		   , TO_CHAR(CRT_DT, 'YYYY-MM-DD') AS CRT_DT
+		   , TO_CHAR(MDFY_DT, 'YYYY-MM-DD') AS MDFY_DT
 		   , DEL_YN
 	    FROM BOARD
 	   WHERE DEL_YN = 'N'
+	   ORDER BY "NUMBER" DESC 
     </select>
-    <insert id="insertNewBoard" parameterType="com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO"><!--반환 타입 int라서 resultType 못씀 resultType은 select에서만 사용. 파라미터는 적어야 함-->
+      <insert id="insertNewBoard" parameterType="com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO"><!--반환 타입 int라서 resultType 못씀 resultType은 select에서만 사용. 파라미터는 적어야 함-->
         <selectKey keyProperty="id" order="BEFORE" resultType="string"><!-- 이게 먼저 실행되어서 (order="BEFORE" : insert 전에 실행해라) id 값을 insert에 넣어줘야 함. resultType 적어줘야 함. java.lang.String -> string -->
             SELECT 'AR-' || TO_CHAR(SYSDATE, 'YYYYMMDD-') || LPAD(SEQ_BOARD_PK.NEXTVAL, 6, '0') 
               FROM DUAL
         </selectKey>
-		INSERT INTO BOARD
-		(ID
-		, SUBJECT
-		, CONTENT
-		, EMAIL
-		, VIEW_CNT
-		, CRT_DT
-		, MDFY_DT
-		, DEL_YN)
-		VALUES(#{id}
-		, #{subject} <!-- mybatis 문법은 ? (사용자가 보내준 데이터) 대신 다른 걸 씀 -->
-		, #{content}
-		, #{email}
-		, 0
-		, SYSDATE 
-		, SYSDATE
-		, 'N')<!-- 세미콜론 안 가져와야함 -->
+        INSERT INTO BOARD
+        (ID
+        , SUBJECT
+        , CONTENT
+        , EMAIL
+        , VIEW_CNT
+        , CRT_DT
+        , MDFY_DT
+        , DEL_YN)
+        VALUES(#{id}
+        , #{subject} <!-- mybatis 문법은 ? (사용자가 보내준 데이터) 대신 다른 걸 씀 -->
+        , #{content}
+        , #{email}
+        , 0
+        , SYSDATE 
+        , SYSDATE
+        , 'N')<!-- 세미콜론 안 가져와야함 -->
     </insert>
     <update id="updateViewCntById" parameterType="string" >
      UPDATE BOARD
@@ -58,22 +60,22 @@
            , CRT_DT
            , MDFY_DT
            , DEL_YN
-	  FROM BOARD 
-	 WHERE ID = #{_parameter}
-	   AND DEL_YN = 'N'
+      FROM BOARD 
+     WHERE ID = #{_parameter}
+       AND DEL_YN = 'N'
     </select>
-    <update id ="updateBoardModifyById" parameterType="com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO">
+     <update id ="updateBoardModifyById" parameterType="com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO">
     UPDATE BOARD
-	   SET SUBJECT = #{subject}
-	     , EMAIL = #{email}
-	     , CONTENT = #{content}
-	 WHERE ID = #{id}
-	   AND DEL_YN = 'N'
+       SET SUBJECT = #{subject}
+         , EMAIL = #{email}
+         , CONTENT = #{content}
+     WHERE ID = #{id}
+       AND DEL_YN = 'N'
     </update>
     <update id ="deleteBoardById" parameterType="string">
     UPDATE BOARD
-	   SET DEL_YN = 'Y'
-	 WHERE ID = #{id}
-	   AND DEL_YN = 'N'
+       SET DEL_YN = 'Y'
+     WHERE ID = #{id}
+       AND DEL_YN = 'N'
     </update>
 </mapper>

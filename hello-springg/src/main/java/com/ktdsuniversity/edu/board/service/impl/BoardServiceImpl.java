@@ -11,83 +11,81 @@ import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
 import com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO;
 import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+import com.ktdsuniversity.edu.file.util.MultipartFileHandler;
+import com.ktdsuniversity.edu.file.vo.FileVO;
 
-@Service // 트랜잭션만 처리해서 간단하게 작성
-public class BoardServiceImpl implements BoardService{ // bean 컨테이너 바깥에 만듦 => 넣어주는 애노테이션 존재 "@Service"
-    // BoardDaoImpl을 의존하겠다 
-	// 멤버변수로 의존
-	@Autowired
-	private BoardDao boardDao;
+@Service
+public class BoardServiceImpl implements BoardService{
+	
+	@Autowired // bean 컨테이너 객체를 가져와라!
+	private MultipartFileHandler multipartFileHandler;
+	@Autowired // 이걸 쓰려면 다른 에노테이션 
+    private BoardDao boardDao;	
 	
 	@Override
 	public ResponseBoardListVO readBoardList() {
 		
-		// 게시글의 개수 필요
-		int count = this.boardDao.selectBoardAllCount();
+		ResponseBoardListVO result = new ResponseBoardListVO();
 		
-		// 게시글의 목록 필요
+		int count = this.boardDao.selectBoardAllCount();
 		List<BoardVO> list = this.boardDao.selectBoardList();
 		
-		// 게시글의 개수 + 게시글의 목록 반환
-		ResponseBoardListVO result = new ResponseBoardListVO();
 		result.setCount(count);
 		result.setList(list);
 		
 		return result;
-		
 	}
-	
+
 	@Override
 	public boolean createNewBoard(RequestCreateBoardVO requestCreateBoardVO) {
-		// boardDao를 통해서 "insert"를 수행
-		// 그 결과를 반환시킨다
-		return this.boardDao.insertNewBoard(requestCreateBoardVO) > 0 ; // insert, update 반환 결과 int -> 0 보다 크면 성공
+		// 업로드해줘
+		FileVO uploadResult = this.multipartFileHandler.upload(requestCreateBoardVO.getFile());
+		System.out.println(uploadResult);
+		
+		return this.boardDao.insertNewBoard(requestCreateBoardVO) > 0;
 	}
 
 	@Override
 	public BoardVO readBoardOneById(String id, boolean doIncreaseViewCount) {
-		// 1. 게시글의 조회 수를 1 증가시킨다.
-		/**
-		 * UPDATE BOARD
-		 * 	SET VIEW_CNT = VIEW_CNT + 1
-		 * WHERE ID = ? 
-		 */
-		if(doIncreaseViewCount) {
-			int updateCount = this.boardDao.updateViewCntById(id);
-			if (updateCount == 0) { // 예외처리
-				throw new IllegalArgumentException(id + "게시글은 존재하지 않습니다.");
-			}
-			
-		}
 		
+//		BoardVO result = new BoardVO();
+		// 조회수 증가 -> 조회 순서가 맞음
+		if (doIncreaseViewCount) {
+			int updateCount = this.boardDao.updateViewCntById(id);
+			if (updateCount == 0) {
+				throw new IllegalArgumentException(id + " 게시글은 존재하지 않습니다.");
+			}
+		}
 		
 		// 2. 게시글의 내용을 조회한다.
 		BoardVO board = this.boardDao.selectBoardById(id);
-		if(board == null) {
-			throw new IllegalArgumentException(id + "게시글은 존재하지 않습니다.");
+		if (board == null) {
+			throw new IllegalArgumentException(id + " 게시글은 존재하지 않습니다.");
 		}
+		
 		// 3. 게시글의 내용을 반환시킨다.
 		return board;
 	}
-	
+
 	@Override
 	public boolean updateBoardModifyById(RequestModifyBoardVO requestModifyBoardVO) {
-		
 		int updateCount = this.boardDao.updateBoardModifyById(requestModifyBoardVO);
 		
-		if(updateCount == 0) {
-			throw new IllegalArgumentException(requestModifyBoardVO.getId() + "게시글은 존재하지 않습니다.");
+		if (updateCount == 0) {
+			throw new IllegalArgumentException(requestModifyBoardVO.getId() + " 게시글은 존재하지 않습니다.");
 		}
+		
 		return updateCount > 0;
-	
 	}
 
 	@Override
 	public boolean deleteBoardById(String id) {
-		int deleteCount = this.boardDao.deleteBoardById(id); // dao에서 update, insert, delete 결과는 항상 int
-		if(deleteCount == 0) {
-			throw new IllegalArgumentException(id + "게시글은 존재하지 않습니다.");
+		int deleteCount = this.boardDao.deleteBoardById(id);
+		if (deleteCount == 0) {
+			throw new IllegalArgumentException(id + " 게시글은 존재하지 않습니다.");
 		}
+		
 		return deleteCount > 0;
 	}
+
 }
