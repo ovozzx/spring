@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %> <%-- jstl 쓰기위해--%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,8 +16,24 @@
                    <div>${board.subject}</div>
                    <label for="email">이메일</label>
                    <div>${board.email}</div>
+                   
+                   <label for="files">첨부파일</label>
+                   <div>
+                      <div>${board.fileGroupVO.fileCount} 개의 첨부파일</div>
+                      <%-- ${board.fileGroupVO.file}는 list -> JSTL로 반복 --%>
+                      <c:forEach items="${board.fileGroupVO.file}" var="file">
+	                      <div>
+	                        <a href="/file/${board.id}/${file.fileGroupId}/${file.fileId}">
+	                         ${file.fileDisplayName}
+	                        </a> 
+	                        파일의 크기 : ${file.fileSize} bytes
+	                      </div>
+	                  </c:forEach>
+                   </div>
+                   
                    <label for="viewCnt">조회수</label>
                    <div>${board.viewCnt}</div>
+                   
                    <label for="crtDt">등록일</label>
                    <div>${board.crtDt}</div>
                    

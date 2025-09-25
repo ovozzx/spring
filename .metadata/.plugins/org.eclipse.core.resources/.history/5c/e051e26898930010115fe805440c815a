@@ -1,7 +1,0 @@
-package com.ktdsuniversity.edu.web;
-
-@Controller
-public class TestController {
-	
-
-}

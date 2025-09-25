@@ -2,9 +2,11 @@ package com.ktdsuniversity.edu.file.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +36,37 @@ public class MultipartFileHandler {
 	@Value("${app.multipart.obfuscation.hide-ext.enable}")
 	private boolean hideExtEnable;
 	
+	private Tika tika;
+	
+	public MultipartFileHandler() {
+		this.tika = new Tika();
+	}
+
+	// 오버로딩
+	public List<FileVO> upload(List<MultipartFile> file){
+		// 업로드하다가 예외 발생하면 null 줘서 null 체크 
+		if(file == null) {
+			return null;
+		}
+		
+		List<FileVO> uploadResultList = new ArrayList<>();
+		
+		for (MultipartFile uploadFile : file) {
+			FileVO uploadResult = this.upload(uploadFile); // 아래 upload 메소드 호출
+			if(uploadResult != null) {
+				uploadResultList.add(uploadResult);
+			}
+		}
+		
+		return uploadResultList;
+	}
+	
 	public FileVO upload(MultipartFile file) {
+		
+		// 업로드된 파일이 없으면 null을 반환 (첨부파일 미업로드하면 오류나는 거 해결)
+		if(file == null || file.isEmpty()) {
+			return null;
+		}
 		// os별 분기처리
 		/**
 		 * Windows: Windows 10
@@ -69,7 +101,7 @@ public class MultipartFileHandler {
 		
 		// 업로드한 파일을 저장.
 		try {
-			file.transferTo(storePath);
+			file.transferTo(storePath); // 파일 업로드 시, multipartfile 객체의 내용을 지정한 file 객체로 전송(저장) 
 		} catch (IllegalStateException | IOException e) {
 			// 예외 케이스 : 디스크 부족, 허용되지 않은 경로에 접근 ....
 			return null; // 저장 할 수 없다!
@@ -80,8 +112,13 @@ public class MultipartFileHandler {
 		uploadResult.setFileDisplayName(file.getOriginalFilename());
 		uploadResult.setFileName(storePath.getName());
 		uploadResult.setFilePath(storePath.getAbsolutePath());
-		// TODO MimeType 추출 후 셋팅해야 함. + 첨부파일 미업로드하면 오류나는 거 해결 필요
-		uploadResult.setFileType("파일의 MimeType을 작성");
+		// TODO MimeType 추출 후 셋팅해야 함.
+//		uploadResult.setFileType("파일의 MimeType을 작성");
+		
+		if(!this.availableStore(storePath, uploadResult, file.getOriginalFilename())) { // 원하는 게 아니면 지움 (업로드도 안 함)
+			storePath.delete();
+			return null; // db에도 업로드 파일 미반영
+		}
 		
 	
 		return uploadResult;
@@ -104,9 +141,26 @@ public class MultipartFileHandler {
 		return newFilename;
 	}
 	
-	// 디스크에 저장되는지까지만 -> db 저장 나중
-	private boolean availableStore(File file) { // java. import. 업로드 가능한 파일인지 확인
-		return false;
+
+	private boolean availableStore(File file, FileVO uploadresult, String displayFilename) { // java. import. 업로드 가능한 파일인지 확인
+		
+		try {
+			String mimeType = this.tika.detect(file);
+			uploadresult.setFileType(mimeType);
+			
+			if(mimeType.equals("text/plain")) { // 애매하다 싶으면 text/plain로 들어옴 (ex) .java, .css 등
+				mimeType = displayFilename.substring(displayFilename.lastIndexOf(".")); // 확장자
+			}
+			
+			System.out.println(file.getName() + ", " + mimeType);
+			
+			return this.whitelist.contains(mimeType); // plain이면 확장자도 검사 -> whitelist에 있는 것만 올라감
+			
+		}
+		catch(IOException e) {
+			return false;
+		}
+		
 	}
 	
 }

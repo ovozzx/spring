@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.board.vo;
 
+import com.ktdsuniversity.edu.file.vo.FileGroupVO;
+
 public class BoardVO {
 
 	private	int number;
@@ -11,7 +13,16 @@ public class BoardVO {
 	private	String crtDt;
 	private	String mdfyDt;
 	private	String delYn;
+	
+	private FileGroupVO fileGroupVO; // 1 (게시글) : 1 (파일 그룹)
 
+	
+	public FileGroupVO getFileGroupVO() {
+		return this.fileGroupVO;
+	}
+	public void setFileGroupVO(FileGroupVO fileGroupVO) {
+		this.fileGroupVO = fileGroupVO;
+	}
 	public int getNumber() {
 		return number;
 	}

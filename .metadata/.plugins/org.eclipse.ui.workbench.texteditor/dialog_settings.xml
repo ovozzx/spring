@@ -10,6 +10,13 @@
 		<item key="isRegEx" value="false"/>
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="board-write"/>
+			<item value="wrap"/>
+			<item value="btn"/>
+			<item value="localStorage"/>
+			<item value="forEach"/>
+			<item value="import"/>
+			<item value="sessionStorage"/>
 			<item value="updateBoardModifyById"/>
 			<item value="updateViewCntById"/>
 			<item value="board"/>
@@ -18,11 +25,9 @@
 			<item value="viewCnt"/>
 			<item value="Autowir"/>
 			<item value="Autowired"/>
-			<item value="Auto"/>
-			<item value="BoardDaoImpl"/>
-			<item value="sqlSessionFactory"/>
 		</list>
 		<list key="replacehistory">
+			<item value="localStorage"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

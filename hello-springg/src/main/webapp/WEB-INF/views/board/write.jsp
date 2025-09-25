@@ -6,6 +6,8 @@
         <meta charset="UTF-8">
         <title>Insert title here</title>
         <link type="text/css" rel="stylesheet" href="/css/hello-spring.css" />
+<script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="/js/board/write.js"></script>
     </head>
     <body>
         <div class="wrapper">
@@ -20,8 +22,10 @@
                     <input id="email" type="email" name="email" />
                     
                     <label for="file">첨부파일</label>
-                    <input id="file" type="file" name="file" />
-                    
+                    <div class="vertical-flex">
+                        <button type="button" class="save-btn add-file">파일 추가</button><%-- 버튼 누를 때마다 추가되도록 --%>
+                        <input id="file" type="file" name="file" /><%--multiple 붙이면 많이 보낼 수 있음 --%>
+                    </div>
                     <label for="content" class="require">내용</label>
                     <textarea id="content" name="content"></textarea>
                     

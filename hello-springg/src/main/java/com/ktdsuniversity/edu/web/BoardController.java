@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,8 @@ import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.RequestCreateBoardVO;
 import com.ktdsuniversity.edu.board.vo.RequestModifyBoardVO;
 import com.ktdsuniversity.edu.board.vo.ResponseBoardListVO;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class BoardController {
@@ -43,10 +46,19 @@ public class BoardController {
 	
 	// (3) 게시판 등록하기 => 등록 버튼 누르는 걸 어케하는지
 	@PostMapping("/write")
-	public String doWriteBoardAction(RequestCreateBoardVO requestCreateBoardVO) {
+	public String doWriteBoardAction(@Valid RequestCreateBoardVO requestCreateBoardVO,
+			                         BindingResult bindingResult,
+			                         Model model) { // 여기서는 파라미터 순서지켜야됨. 실패한 내용만 bindingResult에 보내줌 
+		
+		if(bindingResult.hasErrors()) {
+			
+			model.addAttribute("writeData", requestCreateBoardVO);
+			return "board/write";
+		}
 		
 		// 등록하기 눌렀을 때 insert > 
 		boolean writeResult = this.boardServie.createNewBoard(requestCreateBoardVO);
+		
 		
 //		requestCreateBoardVO.setId();
 //		return "/board/view";

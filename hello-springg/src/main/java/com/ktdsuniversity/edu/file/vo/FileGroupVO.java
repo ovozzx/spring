@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.file.vo;
 
+import java.util.List;
+
 /**
  * @TableName FILE_GROUP
  * @TableComment null
@@ -19,8 +21,19 @@ public class FileGroupVO {
      * @ColumnComment null
      */
     private int fileCount;
+    
+    private List<FileVO> file; // 1 : N 
+   
+    
+    public List<FileVO> getFile() {
+		return this.file;
+	}
 
-    public String getFileGroupId() {
+	public void setFile(List<FileVO> file) {
+		this.file = file;
+	}
+
+	public String getFileGroupId() {
         return this.fileGroupId;
     }
     
