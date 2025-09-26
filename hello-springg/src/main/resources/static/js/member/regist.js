@@ -12,7 +12,7 @@ $().ready(function() {
         console.log(value);
         
         
-        var validateErrorCount = $(this).closest("div").find(".validate-error").length;
+        var validateErrorCount = $(this).closest("div").find(".validate-error").not(".not-ok").length;
         
         if(validateErrorCount > 0){
             $(this).closest("div").find("span.not-ok").remove();
