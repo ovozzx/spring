@@ -1,7 +1,0 @@
-package com.ktdsuniversity.edu.board.vo;
-
-public class ResponseBoardListVO {
-	
-	private int count;
-
-}

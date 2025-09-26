@@ -1,8 +1,0 @@
-package com.ktdsuniversity.edu.board.vo;
-
-public class ResponseBoardListVO {
-	
-	private int count; // 게시글의 총개수
-	private List<BoardVO>;
-
-}

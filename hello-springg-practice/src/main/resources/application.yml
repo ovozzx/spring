@@ -5,7 +5,7 @@
 # mybatis와 spring 연동을 위한 설정 config.xml 파일 위치를 알려줌
 mybatis:
   config-location: classpath:mybatis/config.xml
-  mapper-locations: classpath:com/ktdsuniversity/edu/board/**/**Mapper.xml
+  mapper-locations: classpath:com/ktdsuniversity/edu/**/**Mapper.xml
 spring:
   # template engine (JSP)의 위치를 설정
   # 설정 경로 : src/main/webapp 아래부터 작성

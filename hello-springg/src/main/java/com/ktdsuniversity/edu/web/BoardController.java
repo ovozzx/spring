@@ -93,8 +93,14 @@ public class BoardController {
 	
 	// (6) 게시판 수정하기 
 	@PostMapping("/modify/{id}")
-    public String doModifyBoardAction(@PathVariable String id, RequestModifyBoardVO requestModifyBoardVO) {
+    public String doModifyBoardAction(@PathVariable String id, 
+    		                          @Valid RequestModifyBoardVO requestModifyBoardVO,
+    		                          BindingResult bindingResult,
+    		                          Model model) {
 		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("modifyData", requestModifyBoardVO);
+		}
 		requestModifyBoardVO.setId(id); // form에 포함 안되어있어서 따로 받아 옴
 		
 		boolean modifyResult = this.boardServie.updateBoardModifyById(requestModifyBoardVO);

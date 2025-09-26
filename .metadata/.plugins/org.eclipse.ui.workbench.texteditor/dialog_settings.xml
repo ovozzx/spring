@@ -10,6 +10,11 @@
 		<item key="isRegEx" value="false"/>
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="board-view"/>
+			<item value="board"/>
+			<item value="insertFileGroup"/>
+			<item value="com.ktdsuniversity.edu.file.dao.impl.FileGroupDaoImpl"/>
+			<item value="setFileGroupId"/>
 			<item value="board-write"/>
 			<item value="wrap"/>
 			<item value="btn"/>
@@ -19,12 +24,7 @@
 			<item value="sessionStorage"/>
 			<item value="updateBoardModifyById"/>
 			<item value="updateViewCntById"/>
-			<item value="board"/>
 			<item value="selectBoardById"/>
-			<item value="repeat"/>
-			<item value="viewCnt"/>
-			<item value="Autowir"/>
-			<item value="Autowired"/>
 		</list>
 		<list key="replacehistory">
 			<item value="localStorage"/>
